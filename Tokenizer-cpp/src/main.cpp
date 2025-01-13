@@ -5,8 +5,8 @@
 int main() {
     std::string inputDirectory, outputDirectory;
 
-    inputDirectory = "/home/royce_server2/Tokenizers/dataset1";
-    outputDirectory = "/home/royce_server2/Tokenizers/Tokenizer-cpp/output";
+    inputDirectory = "/Users/reynaroyce/Desktop/Celestis-Tokenizers/dataset1";
+    outputDirectory = "/Users/reynaroyce/Desktop/Celestis-Tokenizers/Tokenizer-cpp/output";
 
 
     auto startTime = std::chrono::high_resolution_clock::now();

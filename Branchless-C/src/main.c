@@ -6,8 +6,8 @@
 #include "../include/processDirectory.hpp"
 
 int main() {
-    const char *inputDirectory = "/home/royce_server2/Tokenizers/input";
-    const char *outputDirectory = "/home/royce_server2/Tokenizers/Branchless-C/output";
+    const char *inputDirectory = "/Users/reynaroyce/Desktop/Celestis-Tokenizers/dataset1";
+    const char *outputDirectory = "/Users/reynaroyce/Desktop/Celestis-Tokenizers/Branchless-C/output";
 
     clock_t startTime = clock();
 

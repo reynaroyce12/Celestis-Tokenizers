@@ -1,2 +1,0 @@
-This is a test in a subfolder.
-The content is similar, but the file path differs.
