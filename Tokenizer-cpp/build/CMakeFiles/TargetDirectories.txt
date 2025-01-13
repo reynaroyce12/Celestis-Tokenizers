@@ -1,0 +1,3 @@
+/home/royce_server2/Tokenizers/Tokenizer-cpp/build/CMakeFiles/Tokenizer.dir
+/home/royce_server2/Tokenizers/Tokenizer-cpp/build/CMakeFiles/edit_cache.dir
+/home/royce_server2/Tokenizers/Tokenizer-cpp/build/CMakeFiles/rebuild_cache.dir
