@@ -1,1 +1,0 @@
-/usr/bin/cc "CMakeFiles/Branchless-Tokenizer.dir/src/main.c.o" "CMakeFiles/Branchless-Tokenizer.dir/src/tokenizer.c.o" "CMakeFiles/Branchless-Tokenizer.dir/src/processDirectory.c.o" -o Branchless-Tokenizer 

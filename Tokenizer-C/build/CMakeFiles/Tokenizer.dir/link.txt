@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/Tokenizer.dir/src/main.c.o CMakeFiles/Tokenizer.dir/src/tokenizer.c.o CMakeFiles/Tokenizer.dir/src/processDirectory.c.o -o Tokenizer 
