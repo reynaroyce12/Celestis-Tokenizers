@@ -2,11 +2,14 @@
 #include <chrono>
 #include "tokenizer.hpp"
 
+// Run with config --build build --config release
+
+
 int main() {
     std::string inputDirectory, outputDirectory;
 
-    inputDirectory = "/Users/reynaroyce/Desktop/Celestis-Tokenizers/dataset1";
-    outputDirectory = "/Users/reynaroyce/Desktop/Celestis-Tokenizers/Tokenizer-cpp/output";
+    inputDirectory = "/Users/reynaroyce/Documents/vava/Development/Celestis-Tokenizers/dataset2";
+    outputDirectory = "/Users/reynaroyce/Documents/vava/Development/Celestis-Tokenizers/Tokenizer-cpp/output";
 
 
     auto startTime = std::chrono::high_resolution_clock::now();

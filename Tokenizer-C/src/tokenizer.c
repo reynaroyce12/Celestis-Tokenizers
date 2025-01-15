@@ -27,3 +27,7 @@ void Tokenizer(FILE *input, FILE *output) {
         }
     }
 }
+
+
+// Pass a list of delimitters (All possible from the ASCII list)
+// Ctype library to generate all the printable chars (isprint funciton)

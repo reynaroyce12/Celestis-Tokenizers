@@ -5,7 +5,7 @@ from file_processor import process_directories
 
 def main():
 
-    input_folder = "/Users/reynaroyce/Documents/vava/Development/Celestis-Tokenizers/dataset1"
+    input_folder = "/Users/reynaroyce/Documents/vava/Development/Celestis-Tokenizers/dataset3"
     output_folder = "/Users/reynaroyce/Documents/vava/Development/Celestis-Tokenizers/Tokenizer-Python/output"
 
     if not os.path.exists(input_folder):

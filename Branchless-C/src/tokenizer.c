@@ -14,12 +14,11 @@ void Tokenizer(FILE *inputText, FILE *outputText) {
             
             int isAlnum = 1;
             for (int i = 0; token[i] != '\0'; i++) {
-                if (!(('0' <= token[i] && token[i] <= '9') || 
-                      ('a' <= token[i] && token[i] <= 'z') || 
-                      ('A' <= token[i] && token[i] <= 'Z'))) {
-                    isAlnum = 0;
-                    break;
-                }
+                isAlnum = (('0' <= token[i] && token[i] <= '9') || 
+                           ('a' <= token[i] && token[i] <= 'z') || 
+                           ('A' <= token[i] && token[i] <= 'Z')) 
+                           ? isAlnum 
+                           : 0;
             }
 
             isAlnum ? fprintf(outputText, "%s ", token) : 0;
@@ -28,3 +27,13 @@ void Tokenizer(FILE *inputText, FILE *outputText) {
         }
     }
 }
+
+// Loose strtok function and manually go over them (implement like strtok from sctratch)
+
+// FOr all programs
+// Measure only the tokenization 
+    // Read everythign in memory
+    // Tokenize all of the file
+    // Write
+
+// Allocate the memory for the output buffers before tokenizing
