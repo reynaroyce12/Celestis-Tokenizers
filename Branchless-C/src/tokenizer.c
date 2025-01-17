@@ -1,32 +1,63 @@
 #include "../include/tokenizer.hpp"
-#include <string.h>
-#include <ctype.h>
-#include <stdio.h>
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
 
 void Tokenizer(FILE *inputText, FILE *outputText) {
-    char textBuffer[1024];
+    size_t bufferSize = 1024;
+    char *textBuffer = (char *)malloc(bufferSize);
+    char *currentToken = (char *)malloc(bufferSize);
+    if (!textBuffer || !currentToken) {
+        fprintf(stderr, "Memory allocation failed\n");
+        return;
+    }
 
-    while(fgets(textBuffer, sizeof(textBuffer), inputText)) {
-        char *token = strtok(textBuffer, " \t\n");
+    size_t currentIndex = 0;
+    while (fgets(textBuffer, bufferSize, inputText)) {
+        size_t i = 0;
+        while (textBuffer[i] != '\0') {
+            int isAlnum = isalnum((unsigned char)textBuffer[i]);  
+            if (isAlnum) {
 
-        while(token != NULL) {
-            
-            int isAlnum = 1;
-            for (int i = 0; token[i] != '\0'; i++) {
-                isAlnum = (('0' <= token[i] && token[i] <= '9') || 
-                           ('a' <= token[i] && token[i] <= 'z') || 
-                           ('A' <= token[i] && token[i] <= 'Z')) 
-                           ? isAlnum 
-                           : 0;
+                if (currentIndex >= bufferSize - 1) {
+                    bufferSize *= 2; 
+                    currentToken = (char *)realloc(currentToken, bufferSize);
+                    if (!currentToken) {
+                        fprintf(stderr, "Memory reallocation failed\n");
+                        free(textBuffer);
+                        return;
+                    }
+                }
+
+                currentToken[currentIndex] = textBuffer[i];
+                currentIndex++;
             }
 
-            isAlnum ? fprintf(outputText, "%s ", token) : 0;
-            
-            token = strtok(NULL, " \t\n");
+            if (!isAlnum && currentIndex > 0) {
+                currentToken[currentIndex] = '\0';  
+                fprintf(outputText, "%s ", currentToken);  
+                currentIndex = 0; 
+            }
+
+            i++; 
         }
+
+        if (currentIndex > 0) {
+            currentToken[currentIndex] = '\0'; 
+            fprintf(outputText, "%s ", currentToken);  
+        }
+
+        currentIndex = 0;  
     }
+
+    free(textBuffer);
+    free(currentToken);
 }
+
+
+
+
 
 // Loose strtok function and manually go over them (implement like strtok from sctratch)
 

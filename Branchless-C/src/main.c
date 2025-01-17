@@ -6,7 +6,7 @@
 #include "../include/processDirectory.hpp"
 
 int main() {
-    const char *inputDirectory = "/Users/reynaroyce/Documents/vava/Development/Celestis-Tokenizers/dataset3";
+    const char *inputDirectory = "/Users/reynaroyce/Documents/vava/Development/Celestis-Tokenizers/datasets/dataset1";
     const char *outputDirectory = "/Users/reynaroyce/Documents/vava/Development/Celestis-Tokenizers/Branchless-C/output";
 
     clock_t startTime = clock();
