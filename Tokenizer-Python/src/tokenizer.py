@@ -1,8 +1,7 @@
 import re
 
 
-
-# Modify to not include underscore
-
 def Tokenize(text):
-    return re.findall(r'\w+', text)
+    return re.findall(r'[a-zA-Z0-9]+', text)
+
+# Modify to not include underscore ✅
