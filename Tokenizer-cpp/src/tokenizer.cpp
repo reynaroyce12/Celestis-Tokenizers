@@ -3,6 +3,7 @@
 #include <regex>
 #include <iostream>
 
+
 std::string tokenize(const std::string& text) {
     std::regex regex_pattern("\\w+");
     auto words_begin = std::sregex_iterator(text.begin(), text.end(), regex_pattern);
@@ -16,35 +17,51 @@ std::string tokenize(const std::string& text) {
     return result;
 }
 
-void processDirectory(const fs::path& inputDirectory, const fs::path& outputDirectory) {
+float processDirectoryAndTokenize(const fs::path& inputDirectory, const fs::path& outputDirectory) { 
+    std::vector<std::string> fileContents;
+    std::vector<fs::path> outputPaths;
+
     for (const auto& entry : fs::recursive_directory_iterator(inputDirectory)) {
-        if (fs::is_directory(entry)) {
-            fs::create_directories(outputDirectory / fs::relative(entry, inputDirectory));
-        } else if (fs::is_regular_file(entry)) {
-            std::ifstream inputFile;
-            inputFile.open(entry.path());
+        if (fs::is_regular_file(entry)) {
+            std::ifstream inputFile(entry.path());
             if (!inputFile.is_open()) {
-                std::cout<< "Could not open file: " << entry.path() << std::endl;
+                std::cout << "Could not open file: " << entry.path() << std::endl;
                 continue;
             }
 
             std::string content((std::istreambuf_iterator<char>(inputFile)), std::istreambuf_iterator<char>());
-            inputFile.close();
-
-            std::string tokenizedText = tokenize(content);
-
-            fs::path outputFilePath = outputDirectory / fs::relative(entry.path(), inputDirectory);
-            std::ofstream outputFile;
-            outputFile.open(outputFilePath);
-            if(!outputFile.is_open()) {
-                std::cout << "Could not write to file: " << outputFilePath << std::endl;
-                continue;
-            }
-
-            outputFile << tokenizedText;
-            outputFile.close();
-
+            fileContents.push_back(content);
+            outputPaths.push_back(outputDirectory / fs::relative(entry.path(), inputDirectory));
         }
     }
+
+    std::vector<std::string> tokenizedTexts;
+    auto tokenizationStart = std::chrono::high_resolution_clock::now();
+
+    for (const auto& content : fileContents) {
+        tokenizedTexts.push_back(tokenize(content));
+    }
+
+    auto tokenizationEnd = std::chrono::high_resolution_clock::now();
+    auto tokenizationDuration = std::chrono::duration_cast<std::chrono::seconds>(tokenizationEnd - tokenizationStart);
+    auto elapsedTime = tokenizationDuration.count();
+
+    for (size_t i = 0; i < tokenizedTexts.size(); ++i) {
+        const auto& tokenizedText = tokenizedTexts[i];
+        const auto& outputFilePath = outputPaths[i];
+
+        fs::create_directories(outputFilePath.parent_path());
+
+        std::ofstream outputFile(outputFilePath);
+        if (!outputFile.is_open()) {
+            std::cout << "Could not write to file: " << outputFilePath << std::endl;
+            continue;
+        }
+
+        outputFile << tokenizedText;
+        outputFile.close();
+
+    }
+    return elapsedTime;
 }
 

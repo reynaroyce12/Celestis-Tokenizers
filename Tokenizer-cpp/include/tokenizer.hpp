@@ -9,6 +9,6 @@ namespace fs = std::filesystem;
 
 std::string tokenize(const std::string& text);
 
-void processDirectory(const fs::path& inputDirectory, const fs::path& outputDirectory);
+float processDirectoryAndTokenize(const fs::path& inputDirectory, const fs::path& outputDirectory);
 
 #endif
