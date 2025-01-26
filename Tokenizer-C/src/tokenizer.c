@@ -7,27 +7,25 @@
 void Tokenizer(FILE *input, FILE *output) {
     char textBuffer[1024];
 
-    while (fgets(textBuffer, sizeof(textBuffer), input)) {
-        char *token = strtok(textBuffer, " \t\n");
+    char delimitters[128];
+    int index = 0;
+
+    for (int i = 0; i < 128; i++) {
+        if (isprint(i) && !isalnum(i)) {
+            delimitters[index++] = (char)i;
+        }
+    }
+    delimitters[index] = '\0';
+
+    while(fgets(textBuffer, sizeof(textBuffer), input)) {
+        char *token = strtok(textBuffer, delimitters);
 
         while (token != NULL) {
-            int isAlnum = 1;
-
-            for (int i = 0; token[i] != '\0'; i++) {
-                if (!isalnum(token[i])) {
-                    isAlnum = 0;
-                    break;
-                }
-            }
-
-            if (isAlnum) {
-                fprintf(output, "%s ", token); 
-            }
-            token = strtok(NULL, " \t\n");
+            fprintf(output, "%s ", token);
+            token = strtok(NULL, delimitters);
         }
     }
 }
 
-
-// Pass a list of delimitters (All possible from the ASCII list)
-// Ctype library to generate all the printable chars (isprint funciton)
+// Pass a list of delimitters (All possible from the ASCII list)  ✅
+// Ctype library to generate all the printable chars (isprint funciton) ✅
