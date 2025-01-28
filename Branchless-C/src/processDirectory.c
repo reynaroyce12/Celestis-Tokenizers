@@ -47,3 +47,6 @@ void ProcessDirectory(const char *inputDirectory, const char *outputDirectory) {
     }
     closedir(directory);
 }
+
+// For all three cpp solutions, use the cpp method to iterate over the files and extract the contents
+// Char pointer (c_str)

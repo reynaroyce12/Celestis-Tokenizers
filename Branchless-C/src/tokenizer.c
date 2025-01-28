@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+// One single allocation and read the data using c++ method and read all of the bbytes (Instead of multiple allocations and reallocations using malloc)
+// Instead of passing the file, pass the buffer (use c++ style iterator)
 
 void Tokenizer(FILE *input, FILE *output) {
     size_t bufferSize = 1024;
