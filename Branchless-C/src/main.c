@@ -6,16 +6,16 @@
 #include "../include/processDirectory.hpp"
 
 int main() {
-    const char *inputDirectory = "/Users/reynaroyce/Documents/vava/Development/Celestis-Tokenizers/datasets/dataset1";
+    const char *inputDirectory = "/Users/reynaroyce/Documents/vava/Development/Celestis-Tokenizers/datasets/test_dir";
     const char *outputDirectory = "/Users/reynaroyce/Documents/vava/Development/Celestis-Tokenizers/Branchless-C/output";
 
-    clock_t startTime = clock();
-
     mkdir(outputDirectory, 0755);
-    ProcessDirectory(inputDirectory, outputDirectory);
 
-    clock_t endTime = clock();
-    double timeTaken = (double)(endTime - startTime) / CLOCKS_PER_SEC;
+    double totalTokenizationTime = 0.0; 
 
-    printf("Execution Time: %.2f seconds\n", timeTaken);
+    ProcessDirectory(inputDirectory, outputDirectory, &totalTokenizationTime);
+
+    printf("Total tokenization time: %f seconds\n", totalTokenizationTime);
+
+    return 0;
 }

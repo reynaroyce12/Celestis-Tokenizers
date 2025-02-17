@@ -3,6 +3,6 @@
 
 #include <stdio.h>
 
-void Tokenizer(FILE *inputText, FILE *outputText);
+void Tokenizer(char *content, FILE *output);
 
 #endif
