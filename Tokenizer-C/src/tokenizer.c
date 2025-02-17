@@ -4,9 +4,8 @@
 #include <ctype.h>
 #include <string.h>
 
-void Tokenizer(FILE *input, FILE *output) {
-    char textBuffer[1024];
 
+void Tokenizer(char *content, FILE *output) {
     char delimitters[128];
     int index = 0;
 
@@ -15,17 +14,13 @@ void Tokenizer(FILE *input, FILE *output) {
             delimitters[index++] = (char)i;
         }
     }
-    delimitters[index] = '\0';
+    delimitters[index] = '\0'; 
 
-    while(fgets(textBuffer, sizeof(textBuffer), input)) {
-        char *token = strtok(textBuffer, delimitters);
+    char *token = strtok(content, delimitters);  
 
-        while (token != NULL) {
-            fprintf(output, "%s ", token);
-            token = strtok(NULL, delimitters);
-        }
+    while (token != NULL) {
+        fprintf(output, "%s ", token);  
+        token = strtok(NULL, delimitters);
     }
 }
 
-// Pass a list of delimitters (All possible from the ASCII list)  ✅
-// Ctype library to generate all the printable chars (isprint funciton) ✅
