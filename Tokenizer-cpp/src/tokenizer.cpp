@@ -2,7 +2,9 @@
 #include <fstream>
 #include <regex>
 #include <iostream>
+#include <cstring>
 
+namespace fs = std::filesystem;
 
 std::string tokenize(const std::string& text) {
     std::regex regex_pattern("\\w+");
@@ -17,13 +19,14 @@ std::string tokenize(const std::string& text) {
     return result;
 }
 
+
 float processDirectoryAndTokenize(const fs::path& inputDirectory, const fs::path& outputDirectory) { 
     std::vector<std::string> fileContents;
     std::vector<fs::path> outputPaths;
 
     for (const auto& entry : fs::recursive_directory_iterator(inputDirectory)) {
         if (fs::is_regular_file(entry)) {
-            std::ifstream inputFile(entry.path());
+            std::ifstream inputFile(entry.path().c_str());  
             if (!inputFile.is_open()) {
                 std::cout << "Could not open file: " << entry.path() << std::endl;
                 continue;
@@ -35,11 +38,15 @@ float processDirectoryAndTokenize(const fs::path& inputDirectory, const fs::path
         }
     }
 
-    std::vector<std::string> tokenizedTexts;
+    std::vector<char*> tokenizedTexts;
     auto tokenizationStart = std::chrono::high_resolution_clock::now();
 
     for (const auto& content : fileContents) {
-        tokenizedTexts.push_back(tokenize(content));
+        const char* input = content.c_str();
+        std::string tokenizedStr = tokenize(input); 
+        char* output = new char[std::strlen(tokenizedStr.c_str()) + 1];  // Allocate buffer
+        std::strcpy(output, tokenizedStr.c_str()); 
+        tokenizedTexts.push_back(output);
     }
 
     auto tokenizationEnd = std::chrono::high_resolution_clock::now();
@@ -47,21 +54,22 @@ float processDirectoryAndTokenize(const fs::path& inputDirectory, const fs::path
     auto elapsedTime = tokenizationDuration.count();
 
     for (size_t i = 0; i < tokenizedTexts.size(); ++i) {
-        const auto& tokenizedText = tokenizedTexts[i];
+        const char* tokenizedText = tokenizedTexts[i];
         const auto& outputFilePath = outputPaths[i];
 
-        fs::create_directories(outputFilePath.parent_path());
-
-        std::ofstream outputFile(outputFilePath);
+        fs::create_directories(outputFilePath.parent_path().c_str());  
+        std::ofstream outputFile(outputFilePath.c_str());  
         if (!outputFile.is_open()) {
             std::cout << "Could not write to file: " << outputFilePath << std::endl;
+            delete[] tokenizedTexts[i]; 
             continue;
         }
 
-        outputFile << tokenizedText;
+        outputFile.write(tokenizedText, std::strlen(tokenizedText));  
         outputFile.close();
 
+        delete[] tokenizedTexts[i];  
     }
+
     return elapsedTime;
 }
-

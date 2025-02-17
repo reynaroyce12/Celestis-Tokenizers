@@ -2,17 +2,14 @@
 #include <chrono>
 #include "tokenizer.hpp"
 
-// Run with config --build build --config release
 
 
 int main() {
     std::string inputDirectory, outputDirectory;
 
-    inputDirectory = "/Users/reynaroyce/Documents/vava/Development/Celestis-Tokenizers/datasets/dataset1";
+    inputDirectory = "/Users/reynaroyce/Documents/vava/Development/Celestis-Tokenizers/datasets/test_dir";
     outputDirectory = "/Users/reynaroyce/Documents/vava/Development/Celestis-Tokenizers/Tokenizer-cpp/output";
 
-
-    // auto startTime = std::chrono::high_resolution_clock::now();
 
     try {
         std::filesystem::create_directories(outputDirectory);
@@ -23,10 +20,6 @@ int main() {
     } catch (const std::exception& error) {
         std::cout << "Error: " << error.what() << std::endl;
     }
-
-    // auto endTime = std::chrono::high_resolution_clock::now();
-    // auto duration = std::chrono::duration_cast<std::chrono::seconds>(endTime - startTime);
-
     
     return 0;
 }
